@@ -5,7 +5,9 @@ description: "Create a duplicate of an existing page for safe editing."
 
 # wordpress_create_page_duplicate
 
-Create a duplicate of an existing page for safe editing. After creating a duplicate, edit the duplicate using [wordpress_update_page](/tools/pages/update-page), then approve in WordPress Admin (Respira → Approve Edits).
+Create a duplicate of an existing page for safe editing. After creating a duplicate, edit the duplicate using [wordpress_update_page](/tools/pages/update-page), then approve in WordPress Admin under Respira → Approvals & Undo.
+
+The response includes a **share preview link** (`preview_url`): send it to anyone who should see the duplicate before it goes live. It opens with no WordPress login and lasts 14 days by default. See [Share preview links](/docs/share-preview-links).
 
 ## Parameters
 
@@ -22,7 +24,9 @@ Create a duplicate of an existing page for safe editing. After creating a duplic
   "original_id": 42,
   "duplicate_id": 43,
   "status": "draft",
-  "approval_url": "https://yoursite.com/wp-admin/admin.php?page=respira-approvals"
+  "approval_url": "https://yoursite.com/wp-admin/admin.php?page=respira-approvals",
+  "preview_url": "https://yoursite.com/?page_id=43&preview=true&respira_preview=43.1790276757.…",
+  "preview_expires_at": "2026-09-24T19:05:57+00:00"
 }
 ```
 
@@ -31,6 +35,7 @@ Create a duplicate of an existing page for safe editing. After creating a duplic
 - "Create a duplicate of the About page"
 - "Duplicate page 42"
 - "Make a safe copy of my homepage so I can edit it"
+- "Duplicate the About page and give me a share preview link for my client"
 
 ## Related Tools
 

@@ -182,6 +182,11 @@
                 "icon": "clipboard-copy"
               },
               {
+                "title": "Share Preview Links",
+                "path": "share-preview-links",
+                "icon": "link"
+              },
+              {
                 "title": "MCP Tools Overview",
                 "path": "tools/overview",
                 "icon": "book-open"
@@ -669,6 +674,11 @@
                 "title": "wordpress_switch_site",
                 "path": "tools/other/switch-site",
                 "icon": "repeat"
+              },
+              {
+                "title": "wordpress_mint_design_preview",
+                "path": "tools/other/mint-design-preview",
+                "icon": "eye"
               }
             ]
           },

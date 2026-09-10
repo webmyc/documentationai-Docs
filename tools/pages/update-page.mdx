@@ -41,9 +41,13 @@ By default, Respira never edits live pages directly:
   "duplicate_created": true,
   "duplicate_id": 43,
   "original_id": 42,
-  "approval_url": "https://yoursite.com/wp-admin/admin.php?page=respira-approvals"
+  "approval_url": "https://yoursite.com/wp-admin/admin.php?page=respira-approvals",
+  "preview_url": "https://yoursite.com/?page_id=43&preview=true&respira_preview=43.1790276757.…",
+  "preview_expires_at": "2026-09-24T19:05:57+00:00"
 }
 ```
+
+When the edit is staged on a duplicate, `preview_url` is a **share preview link**: it opens the staged page with no WordPress login for 14 days by default, and the response message repeats it as "Share preview (no WordPress login needed, valid until …)". See [Share preview links](/docs/share-preview-links).
 
 ## Example Prompts
 
