@@ -1,0 +1,128 @@
+---
+title: Share Preview Links
+description: Send a page that is not live yet to a client, a colleague or a board member, and they open it on any device with no WordPress login. How to get a share preview link (a shareable, login-free preview link), how long it lasts, and what it can and cannot do.
+---
+
+## Overview
+
+When an assistant stages a change through Respira, you get a **share preview link**: a normal web address for that one page, signed by your site. Anyone you send it to can open the page on a phone or a laptop with no WordPress login and no account.
+
+It is the simple way to show a client, a colleague, a trustee or any outside reviewer the work before it goes live. People also call this a shareable preview link, a client review link, or a login-free draft link.
+
+**What you'll learn**
+
+- How to get a share preview link from your assistant
+- What the person you send it to will see
+- How long a link lasts, and how to change that
+- Why a link might not open, and what to do
+
+Share preview links need Respira for WordPress **8.7.5 or later** on the site.
+
+## Two kinds of preview link
+
+Respira makes two kinds of signed preview link. They look alike, so it helps to know which one you are holding.
+
+| | Share preview link | Design preview link |
+|---|---|---|
+| Lasts | 14 days by default (you can change it) | 15 minutes |
+| Comes from | Every staged change and every new duplicate | `wordpress_mint_design_preview`, the respira.press dashboard and Respira AER |
+| Meant for | People without a WordPress login | You, while you work in Respira |
+| Reply wording | "Share preview (no WordPress login needed, valid until …)" | "valid for 15 minutes" |
+
+Send people the **share preview link**. The design preview link expires before most people open it.
+
+## Get a share preview link
+
+<Steps>
+
+<Step title="Ask for the change on a copy" icon="copy">
+Ask your assistant to make the change as usual, for example: "Update the About page headline to …". When Respira edits an existing page it stages the change on a duplicate by default, so your live page does not change. To share a page without changing anything, ask: "Create a duplicate of the About page so i can share it."
+</Step>
+
+<Step title="Find the link in the reply" icon="link">
+The tool reply includes a line like this:
+
+`Share preview (no WordPress login needed, valid until 2026-09-24): https://yoursite.com/?page_id=57&preview=true&respira_preview=57.1790276757.…`
+
+Most assistants quote it. If yours does not, ask: "Give me the share preview link for that duplicate." The same link is in the `preview_url` field of the response, with its expiry in `preview_expires_at`.
+</Step>
+
+<Step title="Send it" icon="send">
+Email, chat or your project tool, whatever the person already uses. They open it and see that page as it will look once it is live.
+</Step>
+
+<Step title="Collect feedback and approve" icon="check">
+For now, feedback comes back to you the usual way: a reply to your email or message. Paste the notes into your assistant. It applies them to the same duplicate, and the same link shows the new version. When you are happy, approve the change in wp-admin under **Respira → Approvals & Undo**.
+</Step>
+
+</Steps>
+
+<Callout kind="tip">
+
+In Respira AER, preview links open in the AER browser pane with one click, so you can check a page yourself before you send it.
+
+</Callout>
+
+## What the person sees
+
+- The page, rendered by your theme and page builder, the way a visitor will see it once it is published.
+- Only that one page. The link does not open other drafts, the admin area or anything else. A link on that page to another unpublished page will not open for them.
+- No admin bar and no login. No cookie is set.
+
+## How long a link lasts
+
+A share preview link lasts **14 days** by default. You can change this per site with the WordPress option `respira_preview_share_ttl_days` (whole days, at least 1).
+
+- Ask your assistant: "Set the WordPress option respira_preview_share_ttl_days to 30."
+- Or, with WP-CLI: `wp option update respira_preview_share_ttl_days 30`
+
+New links use the new length. Links you already sent keep the expiry they were made with. Developers can also use the `respira_preview_share_ttl` filter (seconds; it receives the post id).
+
+A link also stops working before it expires when:
+
+- **you reject the staged change.** The duplicate goes to the trash, and trashed pages cannot be previewed.
+- **you approve it.** The duplicate's content is copied onto the original page and the duplicate is cleaned up. From then on, share the page's normal address.
+
+## Pages that are already published
+
+A published page does not need a share link: its normal address already works for everyone. That includes a staging site that is open to visitors. Share links matter for what is not public yet: drafts, scheduled posts, private pages and staged duplicates.
+
+A share link opens the page through WordPress itself. A password set on the server (for example HTTP basic auth on a staging host), or a maintenance plugin that blocks every visitor, can still stop it. Open the link in a private browser window before you send it.
+
+## Security
+
+- **Signed.** Each link is signed with your site's own secret (the WordPress auth salt) and checked on every request. A link that has been edited or has expired is ignored, and the page stays hidden as if the link had never been used.
+- **One page only.** A link can only open the page it was made for.
+- **Passwords still apply.** Password-protected pages still ask for their password.
+- **Nothing is stored.** There is no list of links to manage or leak. Changing your site's salts cancels every link at once.
+- **Anyone with the link can open it** until it expires. Send it the way you would send a document you would rather not see forwarded.
+
+## Troubleshooting
+
+**The person sees "Page not found" or a login screen.** They were probably sent the plain page address (`?page_id=57&preview=true` with no `respira_preview=` part). That address stays hidden while the page is a draft. Send the share preview link from the reply.
+
+**The link worked yesterday and not today.** It has expired, or the change was rejected. Ask your assistant to duplicate the page again; the reply carries a fresh link.
+
+**The link says it is valid for 15 minutes.** That is a design preview link, meant for the respira.press dashboard and Respira AER. Ask for the share preview link instead.
+
+**My assistant only gave me the page URL.** Ask: "What is the share preview link in the tool response?" It is in the reply message and in the `preview_url` field.
+
+**Nothing about a share link appears at all.** The site's plugin is older than 8.7.5. Update Respira for WordPress on that site.
+
+## Comments on the page
+
+Today a share preview link shows the page, and people's comments come back to you by email or chat. Review links, where people click the spot on the page they mean and leave a note that arrives in your respira.press dashboard for you and your assistant, are on the roadmap.
+
+## Related
+
+<Card title="Duplicate-Before-Edit Workflow" href="/docs/duplicate-before-edit-workflow" icon="clipboard-copy">
+How a change is staged on a duplicate, and where you approve or reject it.
+</Card>
+
+<Card title="wordpress_mint_design_preview" href="/docs/tools/other/mint-design-preview" icon="eye">
+The 15-minute design preview link used by the dashboard and Respira AER.
+</Card>
+
+<Card title="Safety philosophy" href="/docs/safety-philosophy" icon="shield">
+Snapshots, verification, and why changes are staged before they go live.
+</Card>

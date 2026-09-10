@@ -1,0 +1,62 @@
+---
+title: "wordpress_mint_design_preview"
+description: "Mint a 15-minute signed preview link for one page or post, drafts and staged duplicates included. Built for the respira.press dashboard and the Respira AER browser."
+---
+
+# wordpress_mint_design_preview
+
+Mint a short-lived, signed preview link for one page or post, or for the front page. Drafts and Respira duplicates are allowed, so an assistant can show you the page it is working on before anything is published.
+
+Your MCP client may show it as `respira_mint_design_preview` (desktop MCP server) or `respira_wordpress-mint-design-preview` (the plugin's own MCP connector). They are the same tool.
+
+<Callout kind="info">
+
+This link lasts **15 minutes** and is meant for you, inside Respira: the respira.press dashboard and the Respira AER browser use it to show the real rendered page. To send a page to a client, a colleague or anyone without a WordPress login, use the **share preview link** instead, which lasts 14 days. See [Share preview links](/docs/share-preview-links).
+
+</Callout>
+
+## Parameters
+
+| Parameter | Type | Required | Description |
+|-----------|------|----------|-------------|
+| post_id | number | No | ID of the page or post. Drafts, pending posts, scheduled posts and Respira duplicates are allowed. Omit it for the front page. |
+
+## Response
+
+```json
+{
+  "success": true,
+  "url": "https://yoursite.com/?page_id=57&preview=true&respira_preview=57.1789060893.7fa2…",
+  "expires_at": "2026-09-10T18:08:16+00:00"
+}
+```
+
+## What the link does
+
+For 15 minutes, a request that carries the link's `respira_preview` token:
+
+- renders that one page, even if it is a draft or a staged duplicate, with no WordPress login;
+- can be shown inside the respira.press dashboard (framing is allowed for respira.press only);
+- skips page caching, so you see the latest version.
+
+## What it does not do
+
+- It never reveals any page other than the one it was minted for.
+- It does not log anyone in, set a cookie, or show the admin bar.
+- Password-protected pages still ask for the password.
+- Trashed pages cannot be previewed.
+- After it expires, the page behaves as if the token were not there: a draft simply is not found.
+
+Nothing is stored when a link is minted. The token is signed with your site's own secret and checked on every request.
+
+## Example Prompts
+
+- "Show me a preview of the draft you just made"
+- "Mint a preview link for page 57"
+- "Open the homepage preview in the AER browser"
+
+## Related
+
+- [Share preview links](/docs/share-preview-links): the 14-day link to send to people without a login
+- [Duplicate-Before-Edit Workflow](/docs/duplicate-before-edit-workflow)
+- [wordpress_create_page_duplicate](/docs/tools/pages/create-duplicate)
